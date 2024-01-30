@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        class Ecommerce {
+            constructor() {
+                this.productsStore = [];
+                this.cart = [];
+            }
+            addProduct(product) {
+                const newProduct = { name: product, id: this.productsStore.length + 1, price: undefined };
+                this.productsStore.push(newProduct);
+                console.log(`Produto "${product}" adicionado com sucesso!`);
+                return newProduct;
+
+            }
+            setProductPrice(id, price) {
+                let FindById = this.productsStore.find((product => product.id === id))
+                if (FindById) {
+                    FindById.price = price;
+                    return (`Actualiza o preço do producto ${id} para ${price} euros!`)
+                } else {
+                    return (`Nenhum producto encontrado na loja com este o id: ${id}`);
+                }
+            }
+            getAllProducts() {
+                return this.productsStore;
+                //let allProducts = this.productsStore.map(product => product);
+                //return (`Tem ${allProducts.length} productos na loja!`);
+
+            }
+            getAllProductsByName() {
+                let allProductsName = this.productsStore.map((list => list.name))
+                return (`Os nomes dos productos desta loja são ${allProductsName}!`);
+            }
+
+            getProductById(id) {
+                return this.productsStore.find(list => list.id === id);
+
+            }
+            getProductByName(name) {
+                return this.productsStore.find(list => list.name === name);
+            }
+            getProductsByPrice(initialPrice, finalPrice) {
+                let productsByPrice = this.productsStore.filter(product => product.price >= initialPrice && product.price <= finalPrice);
+                if (productsByPrice.length > 0) {
+                    //return productsByPrice
+                    return (`Pelos seguintes valores tem disponiveis ${productsByPrice.length} productos!`)
+                } else {
+                    return (`Nenhum producto encontrado pelos valores indicados!`)
+                }
+            }
+            addProductToCart(product) {
+                //console.log(`Producto adicionado ao carrinho com sucesso!`)
+                return this.cart.push(product);
+            }
+            getCart() {
+                let cartList = this.cart.map(list => list.name)
+                return (`o carrinho tem ${cartList.join(` , `)} na lista!`)
+                //return (`o carro tem ${this.cart.length} produtos!`)
+            }
+            getCartTotalPrice() {
+                let initialValue = 0;
+                let totalPrice = this.cart.reduce((acumulator, currentValue) => acumulator + currentValue.price, initialValue);
+                return (`${totalPrice} Euros`);
+            }
+        }
+        const nikeStore = new Ecommerce();
+        //addProduct
+        let product1 = nikeStore.addProduct(`T-shirt`);
+        let product2 = nikeStore.addProduct(`sapato`);
+        let product3 = nikeStore.addProduct(`camisola`);
+        let product4 = nikeStore.addProduct(`casaco`);
+        //setProductPrice by id
+        console.log(nikeStore.setProductPrice(1, 20.99));
+        console.log(nikeStore.setProductPrice(2, 35.99));
+        console.log(nikeStore.setProductPrice(3, 40.99));
+        console.log(nikeStore.setProductPrice(4, 45.99));
+
+        //etAllProducts
+        console.log(nikeStore.getAllProducts());
+        //getAllProductsNames
+        console.log(nikeStore.getAllProductsByName());
+        //getProductById
+        console.log(nikeStore.getProductById(1));
+        //getProductByName
+        console.log(nikeStore.getProductByName(`camisola`));
+        //getProductsByPrice
+        console.log(nikeStore.getProductsByPrice(22, 45));
+        //addProductToCart
+        nikeStore.addProductToCart(product4);
+        nikeStore.addProductToCart(product1);
+        //getCart
+        console.log(nikeStore.getCart());
+        //getCartTotalPrice
+        console.log(nikeStore.getCartTotalPrice());
+
+        // array completo 
+        // console.log(nikeStore.productsStore);
+
+    </script>
+
+</body>
+
+</html>
